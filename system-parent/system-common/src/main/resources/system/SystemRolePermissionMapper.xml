@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.general.system.common.mapper.SystemRolePermissionMapper">
+    
+    <resultMap type="org.general.system.common.data.entity.system.SystemRolePermission" id="SystemRolePermissionResult">
+        <result property="id"    column="id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="roleId"    column="role_id"    />
+        <result property="permissionId"    column="permission_id"    />
+    </resultMap>
+	
+	<sql id="selectSystemRolePermissionVo">
+        select id, create_time, update_time, role_id, permission_id from t_system_role_permission
+    </sql>
+	
+    <select id="selectSystemRolePermissionList" parameterType="org.general.system.common.data.entity.system.SystemRolePermission" resultMap="SystemRolePermissionResult">
+        <include refid="selectSystemRolePermissionVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="roleId != null "> and role_id = #{roleId}</if>
+             <if test="permissionId != null "> and permission_id = #{permissionId}</if>
+         </where>
+    </select>
+    
+    <select id="selectSystemRolePermissionById" parameterType="Long" resultMap="SystemRolePermissionResult">
+        <include refid="selectSystemRolePermissionVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSystemRolePermission" parameterType="org.general.system.common.data.entity.system.SystemRolePermission">
+        insert into t_system_role_permission
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="roleId != null  ">role_id,</if>
+			<if test="permissionId != null  ">permission_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="roleId != null  ">#{roleId},</if>
+			<if test="permissionId != null  ">#{permissionId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateSystemRolePermission" parameterType="org.general.system.common.data.entity.system.SystemRolePermission">
+        update t_system_role_permission
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="roleId != null  ">role_id = #{roleId},</if>
+            <if test="permissionId != null  ">permission_id = #{permissionId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteSystemRolePermissionById" parameterType="Long">
+        delete from t_system_role_permission where id = #{id}
+    </delete>
+	
+    <delete id="deleteSystemRolePermissionByIds" parameterType="String">
+        delete from t_system_role_permission where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

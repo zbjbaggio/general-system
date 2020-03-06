@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.general.system.common.mapper.SystemPermissionMapper">
+    
+    <resultMap type="org.general.system.common.data.entity.system.SystemPermission" id="SystemPermissionResult">
+        <result property="id"    column="id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="name"    column="name"    />
+        <result property="code"    column="code"    />
+        <result property="icon"    column="icon"    />
+        <result property="type"    column="type"    />
+    </resultMap>
+	
+	<sql id="selectSystemPermissionVo">
+        select id, create_time, update_time, parent_id, name, code, icon, type from t_system_permission
+    </sql>
+	
+    <select id="selectSystemPermissionList" parameterType="org.general.system.common.data.entity.system.SystemPermission" resultMap="SystemPermissionResult">
+        <include refid="selectSystemPermissionVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="parentId != null "> and parent_id = #{parentId}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="code != null  and code != '' "> and code = #{code}</if>
+             <if test="icon != null  and icon != '' "> and icon = #{icon}</if>
+             <if test="type != null "> and type = #{type}</if>
+         </where>
+    </select>
+    
+    <select id="selectSystemPermissionById" parameterType="Long" resultMap="SystemPermissionResult">
+        <include refid="selectSystemPermissionVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSystemPermission" parameterType="org.general.system.common.data.entity.system.SystemPermission" useGeneratedKeys="true" keyProperty="id">
+        insert into t_system_permission
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="parentId != null  ">parent_id,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="code != null  and code != ''  ">code,</if>
+			<if test="icon != null  and icon != ''  ">icon,</if>
+			<if test="type != null  ">type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="parentId != null  ">#{parentId},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="code != null  and code != ''  ">#{code},</if>
+			<if test="icon != null  and icon != ''  ">#{icon},</if>
+			<if test="type != null  ">#{type},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateSystemPermission" parameterType="org.general.system.common.data.entity.system.SystemPermission">
+        update t_system_permission
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="parentId != null  ">parent_id = #{parentId},</if>
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="code != null  and code != ''  ">code = #{code},</if>
+            <if test="icon != null  and icon != ''  ">icon = #{icon},</if>
+            <if test="type != null  ">type = #{type},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteSystemPermissionById" parameterType="Long">
+        delete from t_system_permission where id = #{id}
+    </delete>
+	
+    <delete id="deleteSystemPermissionByIds" parameterType="String">
+        delete from t_system_permission where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
