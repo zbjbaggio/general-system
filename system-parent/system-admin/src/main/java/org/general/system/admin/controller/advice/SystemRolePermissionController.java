@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.general.system.common.data.entity.system.SystemRolePermission;
-import org.general.system.common.service.SystemRolePermissionService;
+import org.general.system.common.service.system.SystemRolePermissionService;
 import org.general.system.common.controller.BaseController;
 import org.general.system.common.data.page.TableDataInfo;
 

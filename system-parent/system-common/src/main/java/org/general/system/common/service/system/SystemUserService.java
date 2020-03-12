@@ -1,6 +1,9 @@
-package org.general.system.common.service;
+package org.general.system.common.service.system;
 
-import org.general.system.common.data.entity.SystemUser;
+import org.general.system.common.data.dto.SystemUserDTO;
+import org.general.system.common.data.entity.system.SystemUser;
+import org.general.system.common.data.vo.SystemUserVO;
+
 import java.util.List;
 
 /**
@@ -49,5 +52,6 @@ public interface SystemUserService {
      * @return 结果
      */
 	int deleteSystemUserByIds(Long[] ids);
-	
+
+	SystemUserVO login(SystemUserDTO systemUserDTO);
 }

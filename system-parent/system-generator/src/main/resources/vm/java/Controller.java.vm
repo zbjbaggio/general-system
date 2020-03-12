@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import ${package}.common.annotation.Log;
 import ${package}.common.enums.BusinessType;
 import ${package}.common.data.entity.#if(${moduleName} != '')${moduleName}.#end${className};
-import ${package}.common.service.${className}Service;
+import ${package}.common.service.#if(${moduleName} != '')${moduleName}.#end${className}Service;
 import ${package}.common.controller.BaseController;
 import com.szlink.investment.common.core.page.TableDataInfo;
 import com.szlink.investment.common.core.domain.AjaxResult;

@@ -1,5 +1,5 @@
-package ${package}.data.entity;
-
+package ${package}.data.entity#if(${moduleName} != '').${moduleName}#end;
+import ${package}.data.entity.BaseEntity;
 import lombok.Data;
 #foreach ($column in $columns)
 #if($column.attrType == 'Date' && ($column.attrname != 'createBy' && $column.attrname != 'createTime' && $column.attrname != 'updateBy' && $column.attrname != 'updateTime' && $column.attrname != 'remark'))

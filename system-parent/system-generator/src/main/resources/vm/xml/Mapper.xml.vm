@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="${package}.common.mapper.${className}Mapper">
+<mapper namespace="${package}.common.mapper.#if(${moduleName} != '')${moduleName}.#end.${className}Mapper">
     
     <resultMap type="${package}.common.data.entity.${className}" id="${className}Result">
 #foreach ($column in $columns)
@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select#foreach($column in $columns) $column.columnName#if($velocityCount != $columns.size()),#end#end from ${tableName}
     </sql>
 	
-    <select id="select${className}List" parameterType="${package}.common.data.entity.${className}" resultMap="${className}Result">
+    <select id="select${className}List" parameterType="${package}.common.data.entity.#if(${moduleName} != '')${moduleName}.#end${className}" resultMap="${className}Result">
         <include refid="select${className}Vo"/>
         <where>  
 #foreach($column in $columns)
@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where ${primaryKey.columnName} = #{${primaryKey.attrname}}
     </select>
         
-    <insert id="insert${className}" parameterType="${package}.common.data.entity.${className}"#if($primaryKey.extra == 'auto_increment') useGeneratedKeys="true" keyProperty="$primaryKey.attrname"#end>
+    <insert id="insert${className}" parameterType="${package}.common.data.entity.#if(${moduleName} != '')${moduleName}.#end${className}"#if($primaryKey.extra == 'auto_increment') useGeneratedKeys="true" keyProperty="$primaryKey.attrname"#end>
         insert into ${tableName}
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 #foreach($column in $columns)
@@ -46,7 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 	 
-    <update id="update${className}" parameterType="${package}.common.data.entity.${className}">
+    <update id="update${className}" parameterType="${package}.common.data.entity.#if(${moduleName} != '')${moduleName}.#end${className}">
         update ${tableName}
         <trim prefix="SET" suffixOverrides=",">
 #foreach($column in $columns)

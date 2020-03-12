@@ -1,6 +1,6 @@
-package ${package}.service;
+package ${package}.service#if(${moduleName} != '').${moduleName}#end;
 
-import ${package}.common.data.entity.${className};
+import ${package}.common.data.entity.#if(${moduleName} != '')${moduleName}.#end${className};
 import java.util.List;
 
 /**

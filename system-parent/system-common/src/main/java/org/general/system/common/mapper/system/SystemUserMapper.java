@@ -1,6 +1,7 @@
-package org.general.system.common.mapper;
+package org.general.system.common.mapper.system;
 
-import org.general.system.common.data.entity.SystemUser;
+import org.apache.ibatis.annotations.Mapper;
+import org.general.system.common.data.entity.system.SystemUser;
 import java.util.List;	
 
 /**
@@ -9,7 +10,8 @@ import java.util.List;
  * @author eason
  * @date 2020-03-06
  */
-interface SystemUserMapper {
+@Mapper
+public interface SystemUserMapper {
 	/**
      * 查询系统用户信息
      * 
@@ -57,5 +59,6 @@ interface SystemUserMapper {
      * @return 结果
      */
 	int deleteSystemUserByIds(Long[] ids);
-	
+
+    SystemUser getByUsername(String username);
 }

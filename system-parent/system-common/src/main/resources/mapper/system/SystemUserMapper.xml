@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.general.system.common.mapper.SystemUserMapper">
+<mapper namespace="org.general.system.common.mapper.system.SystemUserMapper">
     
-    <resultMap type="org.general.system.common.data.entity.SystemUser" id="SystemUserResult">
+    <resultMap type="org.general.system.common.data.entity.system.SystemUser" id="SystemUserResult">
         <result property="id"    column="id"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select id, create_time, update_time, username, password, solt, status from t_system_user
     </sql>
 	
-    <select id="selectSystemUserList" parameterType="org.general.system.common.data.entity.SystemUser" resultMap="SystemUserResult">
+    <select id="selectSystemUserList" parameterType="org.general.system.common.data.entity.system.SystemUser" resultMap="SystemUserResult">
         <include refid="selectSystemUserVo"/>
         <where>  
             <if test="id != null "> and id = #{id}</if>
@@ -35,8 +35,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectSystemUserVo"/>
         where id = #{id}
     </select>
-        
-    <insert id="insertSystemUser" parameterType="org.general.system.common.data.entity.SystemUser" useGeneratedKeys="true" keyProperty="id">
+
+    <select id="getByUsername" resultMap="SystemUserResult" parameterType="String">
+        <include refid="selectSystemUserVo"/>
+        where username = #{username} and status = 1
+    </select>
+
+    <insert id="insertSystemUser" parameterType="org.general.system.common.data.entity.system.SystemUser" useGeneratedKeys="true" keyProperty="id">
         insert into t_system_user
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="createTime != null  ">create_time,</if>
@@ -56,7 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 	 
-    <update id="updateSystemUser" parameterType="org.general.system.common.data.entity.SystemUser">
+    <update id="updateSystemUser" parameterType="org.general.system.common.data.entity.system.SystemUser">
         update t_system_user
         <trim prefix="SET" suffixOverrides=",">
             <if test="createTime != null  ">create_time = #{createTime},</if>

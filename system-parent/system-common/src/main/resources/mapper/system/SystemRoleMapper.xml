@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.general.system.common.mapper.system.SystemRoleMapper">
+    
+    <resultMap type="org.general.system.common.data.entity.system.SystemRole" id="SystemRoleResult">
+        <result property="id"    column="id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="name"    column="name"    />
+        <result property="description"    column="description"    />
+    </resultMap>
+	
+	<sql id="selectSystemRoleVo">
+        select id, create_time, update_time, name, description from t_system_role
+    </sql>
+	
+    <select id="selectSystemRoleList" parameterType="org.general.system.common.data.entity.system.SystemRole" resultMap="SystemRoleResult">
+        <include refid="selectSystemRoleVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="description != null  and description != '' "> and description = #{description}</if>
+         </where>
+    </select>
+    
+    <select id="selectSystemRoleById" parameterType="Long" resultMap="SystemRoleResult">
+        <include refid="selectSystemRoleVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSystemRole" parameterType="org.general.system.common.data.entity.system.SystemRole" useGeneratedKeys="true" keyProperty="id">
+        insert into t_system_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="description != null  and description != ''  ">description,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="description != null  and description != ''  ">#{description},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateSystemRole" parameterType="org.general.system.common.data.entity.system.SystemRole">
+        update t_system_role
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="description != null  and description != ''  ">description = #{description},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteSystemRoleById" parameterType="Long">
+        delete from t_system_role where id = #{id}
+    </delete>
+	
+    <delete id="deleteSystemRoleByIds" parameterType="String">
+        delete from t_system_role where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

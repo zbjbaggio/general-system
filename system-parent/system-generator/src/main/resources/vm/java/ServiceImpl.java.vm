@@ -3,9 +3,9 @@ package ${package}.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ${package}.common.mapper.${className}Mapper;
-import ${package}.common.data.entity.${className};
-import ${package}.common.service.${className}Service;
+import ${package}.common.mapper.#if(${moduleName} != '')${moduleName}.#end${className}Mapper;
+import ${package}.common.data.entity.#if(${moduleName} != '')${moduleName}.#end${className};
+import ${package}.common.service.#if(${moduleName} != '')${moduleName}.#end${className}Service;
 
 /**
  * ${tableComment} 服务层实现

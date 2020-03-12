@@ -1,14 +1,14 @@
-package org.general.system.common.service.impl;
+package org.general.system.common.service.impl.system;
 
-import java.util.List;
-
+import org.general.system.common.data.entity.system.SystemRolePermission;
 import org.general.system.common.enmus.ErrorInfo;
 import org.general.system.common.exception.PrivateException;
+import org.general.system.common.mapper.system.SystemRolePermissionMapper;
+import org.general.system.common.service.system.SystemRolePermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.general.system.common.mapper.SystemRolePermissionMapper;
-import org.general.system.common.data.entity.system.SystemRolePermission;
-import org.general.system.common.service.SystemRolePermissionService;
+
+import java.util.List;
 
 /**
  * 角色权限 服务层实现

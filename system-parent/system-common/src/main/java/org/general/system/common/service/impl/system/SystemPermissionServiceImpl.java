@@ -1,11 +1,12 @@
-package org.general.system.common.service.impl;
+package org.general.system.common.service.impl.system;
 
-import java.util.List;
+import org.general.system.common.data.entity.system.SystemPermission;
+import org.general.system.common.mapper.system.SystemPermissionMapper;
+import org.general.system.common.service.system.SystemPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.general.system.common.mapper.SystemPermissionMapper;
-import org.general.system.common.data.entity.system.SystemPermission;
-import org.general.system.common.service.SystemPermissionService;
+
+import java.util.List;
 
 /**
  * 菜单权限 服务层实现

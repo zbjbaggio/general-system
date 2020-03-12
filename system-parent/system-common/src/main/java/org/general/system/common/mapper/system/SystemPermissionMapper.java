@@ -1,4 +1,4 @@
-package org.general.system.common.mapper;
+package org.general.system.common.mapper.system;
 
 import org.general.system.common.data.entity.system.SystemPermission;
 import java.util.List;	

@@ -1,4 +1,4 @@
-package org.general.system.common.service;
+package org.general.system.common.service.system;
 
 import org.general.system.common.data.entity.system.SystemRolePermission;
 import java.util.List;

@@ -20,7 +20,7 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
-  #
+  #数据库
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -50,7 +50,7 @@ spring:
     time-zone: GMT+8
   #redis 配置
   redis:
-    database: 0
+    database: 1
     host: 192.168.101.2
     password: ''
     port: 6379
@@ -69,8 +69,7 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 mapper:
-  mappers:
-    - tk.mybatis.springboot.util.MyMapper
+  mappers: - tk.mybatis.springboot.util.MyMapper
   not-empty: false
   identity: MYSQL
 pagehelper:

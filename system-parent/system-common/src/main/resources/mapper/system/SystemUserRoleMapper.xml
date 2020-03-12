@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.general.system.common.mapper.system.SystemUserRoleMapper">
+    
+    <resultMap type="org.general.system.common.data.entity.system.SystemUserRole" id="SystemUserRoleResult">
+        <result property="id"    column="id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="userId"    column="user_id"    />
+        <result property="roleId"    column="role_id"    />
+    </resultMap>
+	
+	<sql id="selectSystemUserRoleVo">
+        select id, create_time, update_time, user_id, role_id from t_system_user_role
+    </sql>
+	
+    <select id="selectSystemUserRoleList" parameterType="org.general.system.common.data.entity.system.SystemUserRole" resultMap="SystemUserRoleResult">
+        <include refid="selectSystemUserRoleVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="userId != null "> and user_id = #{userId}</if>
+             <if test="roleId != null "> and role_id = #{roleId}</if>
+         </where>
+    </select>
+    
+    <select id="selectSystemUserRoleById" parameterType="Long" resultMap="SystemUserRoleResult">
+        <include refid="selectSystemUserRoleVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSystemUserRole" parameterType="org.general.system.common.data.entity.system.SystemUserRole" useGeneratedKeys="true" keyProperty="id">
+        insert into t_system_user_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="userId != null  ">user_id,</if>
+			<if test="roleId != null  ">role_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="userId != null  ">#{userId},</if>
+			<if test="roleId != null  ">#{roleId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateSystemUserRole" parameterType="org.general.system.common.data.entity.system.SystemUserRole">
+        update t_system_user_role
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="userId != null  ">user_id = #{userId},</if>
+            <if test="roleId != null  ">role_id = #{roleId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteSystemUserRoleById" parameterType="Long">
+        delete from t_system_user_role where id = #{id}
+    </delete>
+	
+    <delete id="deleteSystemUserRoleByIds" parameterType="String">
+        delete from t_system_user_role where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
