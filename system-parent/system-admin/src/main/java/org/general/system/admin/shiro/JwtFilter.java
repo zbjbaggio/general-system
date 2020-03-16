@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class JwtFilter extends BasicHttpAuthenticationFilter {
 
-	private String X_ACCESS_TOKEN = "X-Access-Token";
+	private final String X_ACCESS_TOKEN = "X-Access-Token";
 
 	/**
 	 * 执行登录认证
@@ -31,19 +31,18 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 	 */
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-		try {
-			executeLogin(request, response);
-			return true;
-		} catch (Exception e) {
-			throw new AuthenticationException("Token失效，请重新登录", e);
-		}
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        String token = httpServletRequest.getHeader(X_ACCESS_TOKEN);
+        JwtToken jwtToken = new JwtToken(token);
+        getSubject(request, response).login(jwtToken);
+        return true;
 	}
 
 	/**
 	 *
 	 */
-	@Override
-	protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
+	/*@Override
+	protected boolean executeLogin(ServletRequest request, ServletResponse response) {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		String token = httpServletRequest.getHeader(X_ACCESS_TOKEN);
 		JwtToken jwtToken = new JwtToken(token);
@@ -51,7 +50,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 		getSubject(request, response).login(jwtToken);
 		// 如果没有抛出异常则代表登入成功，返回true
 		return true;
-	}
+	}*/
 
 	/**
 	 * 对跨域提供支持

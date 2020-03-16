@@ -2,7 +2,8 @@ package org.general.system.common.mapper.system;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.general.system.common.data.entity.system.SystemUser;
-import java.util.List;	
+import java.util.List;
+import java.util.Set;
 
 /**
  * 系统用户 数据层
@@ -60,5 +61,18 @@ public interface SystemUserMapper {
      */
 	int deleteSystemUserByIds(Long[] ids);
 
+	/**
+	 * 根据用户名查询正常用户的相关数据
+	 * @param username
+	 * @return
+	 */
     SystemUser getByUsername(String username);
+
+	/**
+	 * 根据用户id查询该用户拥有的权限
+	 * @param userId
+	 * @return 后端权限url
+	 */
+	Set<String> selectPermissionByUserId(Long userId);
+
 }

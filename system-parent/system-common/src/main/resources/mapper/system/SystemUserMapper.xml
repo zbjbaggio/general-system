@@ -41,6 +41,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where username = #{username} and status = 1
     </select>
 
+    <select id="selectPermissionByUserId" resultType="java.lang.String" parameterType="Long">
+        SELECT distinct c.permission FROM t_system_user_role a
+        JOIN t_system_role_permission b ON a.role_id = b.role_id
+        JOIN t_system_permission c on c.id = b.permission_id
+        WHERE a.user_id= #{userId} and permission is not null;
+    </select>
+
     <insert id="insertSystemUser" parameterType="org.general.system.common.data.entity.system.SystemUser" useGeneratedKeys="true" keyProperty="id">
         insert into t_system_user
 		<trim prefix="(" suffix=")" suffixOverrides=",">

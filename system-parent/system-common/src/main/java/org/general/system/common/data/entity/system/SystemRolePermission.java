@@ -12,8 +12,6 @@ import org.general.system.common.data.entity.BaseEntity;
 @Data
 public class SystemRolePermission extends BaseEntity {
 
-	/** 主键 */
-	private Long id;
 	/**  */
 	private Long roleId;
 	/**  */

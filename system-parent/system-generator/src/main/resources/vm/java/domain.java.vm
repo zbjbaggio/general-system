@@ -22,7 +22,7 @@ import lombok.Data;
 public class ${className} extends BaseEntity {
 
 #foreach ($column in $columns)
-#if($column.attrname != 'createBy' && $column.attrname != 'createTime' && $column.attrname != 'updateBy' && $column.attrname != 'updateTime' && $column.attrname != 'remark')
+#if($column.attrname != 'id' && $column.attrname != 'createBy' && $column.attrname != 'createTime' && $column.attrname != 'updateBy' && $column.attrname != 'updateTime' && $column.attrname != 'remark')
 	/** $column.columnComment */
 	private $column.attrType $column.attrname;
 

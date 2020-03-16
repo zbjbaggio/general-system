@@ -69,7 +69,8 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 mapper:
-  mappers: - tk.mybatis.springboot.util.MyMapper
+  mappers:
+    - tk.mybatis.springboot.util.MyMapper
   not-empty: false
   identity: MYSQL
 pagehelper:

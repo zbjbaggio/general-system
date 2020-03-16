@@ -27,6 +27,8 @@
         <pagehelper.version>1.2.13</pagehelper.version>
         <shiro.version>1.4.2</shiro.version>
         <shiro.redis.version>3.2.3</shiro.redis.version>
+        <kaptcha.version>2.3.2</kaptcha.version>
+        <jwt.version>3.8.3</jwt.version>
     </properties>
 
     <dependencies>
@@ -99,6 +101,11 @@
                 <version>${velocity.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.github.penggle</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${kaptcha.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${commons.io.version}</version>
@@ -114,13 +121,11 @@
                 <version>${system.version}</version>
                 <scope>provided</scope>
             </dependency>
-
             <dependency>
                 <groupId>com.auth0</groupId>
                 <artifactId>java-jwt</artifactId>
-                <version>3.8.3</version>
+                <version>${jwt.version}</version>
             </dependency>
-
             <!--shiro-->
             <dependency>
                 <groupId>org.apache.shiro</groupId>
@@ -139,10 +144,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-
-
-
-
         </dependencies>
     </dependencyManagement>
 

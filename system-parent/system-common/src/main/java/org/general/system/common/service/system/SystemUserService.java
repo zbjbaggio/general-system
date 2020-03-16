@@ -5,6 +5,7 @@ import org.general.system.common.data.entity.system.SystemUser;
 import org.general.system.common.data.vo.SystemUserVO;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 系统用户 服务层
@@ -35,7 +36,7 @@ public interface SystemUserService {
      * @param systemUser 系统用户信息
      * @return 结果
      */
-	int insertSystemUser(SystemUser systemUser);
+	SystemUser insertSystemUser(SystemUser systemUser);
 	
 	/**
      * 修改系统用户
@@ -54,4 +55,8 @@ public interface SystemUserService {
 	int deleteSystemUserByIds(Long[] ids);
 
 	SystemUserVO login(SystemUserDTO systemUserDTO);
+
+    Set<String> listPermissionsByUserId(Long userId);
+
+	void updateStatus(Long userId, int freeze);
 }

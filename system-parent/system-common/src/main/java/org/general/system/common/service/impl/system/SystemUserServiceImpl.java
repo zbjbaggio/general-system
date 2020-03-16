@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * 系统用户 服务层实现
@@ -52,13 +54,32 @@ public class SystemUserServiceImpl implements SystemUserService {
 		if (!systemUser.getPassword().equals(password)) {
 			throw new PrivateException(ErrorInfo.LOGIN_ERROR);
 		}
-		// TODO 权限 菜单
-
 		SystemUserVO systemUserVO = new SystemUserVO();
+		systemUserVO.setId(systemUser.getId());
 		systemUserVO.setUsername(systemUser.getUsername());
-		systemUserVO.setToken(JwtUtil.sign(systemUserVO.getUsername(), PasswordUtil.getSalt()));
+		systemUserVO.setToken(JwtUtil.sign(systemUserVO.getUsername(), UUID.randomUUID().toString()));
 		redisService.saveSystemLogin(systemUserVO);
 		return systemUserVO;
+	}
+
+	/**
+	 * 根据用户id查询拥有的权限
+	 * @param userId 系统用户id
+	 * @return 后端权限url
+	 */
+	@Override
+	public Set<String> listPermissionsByUserId(Long userId) {
+		return systemUserMapper.selectPermissionByUserId(userId);
+	}
+
+	/**
+	 * 根据用户id修改用户状态
+	 * @param userId 用户id
+	 * @param freeze 状态 {@link org.general.system.common.constants.SystemUserStatus}
+	 */
+	@Override
+	public void updateStatus(Long userId, int freeze) {
+
 	}
 
 	/**
@@ -87,11 +108,16 @@ public class SystemUserServiceImpl implements SystemUserService {
      * 新增系统用户
      * 
      * @param systemUser 系统用户信息
-     * @return 结果
+     * @return 返回带有id的用户信息
      */
 	@Override
-	public int insertSystemUser(SystemUser systemUser) {
-	    return systemUserMapper.insertSystemUser(systemUser);
+	public SystemUser insertSystemUser(SystemUser systemUser) {
+		int count = systemUserMapper.insertSystemUser(systemUser);
+		if (count != 1) {
+			log.info("用户保存失败！用户信息：{}", systemUser);
+			throw new PrivateException(ErrorInfo.ADD_ERROR);
+		}
+		return systemUser;
 	}
 	
 	/**

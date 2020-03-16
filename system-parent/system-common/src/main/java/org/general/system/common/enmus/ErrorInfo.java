@@ -19,7 +19,7 @@ public enum ErrorInfo {
     USER_LOCKED(50008, "该用户已被锁定，请联系管理员！" ),
     USER_UNACTIVATED(50009, "该用户还未审核通过请耐心等待！"),
     USER_NO_LOGIN(50010, "该用户已冻结请1个小时后再试！"),
-    SAVE_ERROR(50011, "保存失败！"),
+    ADD_ERROR(50011, "新增失败！"),
     STATUS_ERROR(50012, "修改状态失败！"),
     DELETE_ERROR(50013, "删除失败！"),
     NAME_SAME(50014, "名称重复！"),

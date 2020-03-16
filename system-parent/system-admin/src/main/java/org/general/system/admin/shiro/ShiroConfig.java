@@ -18,7 +18,6 @@ import org.springframework.util.StringUtils;
 
 import javax.servlet.Filter;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Slf4j
@@ -27,6 +26,9 @@ public class ShiroConfig {
 
 	@Value("${spring.redis.port}")
 	private String port;
+
+	@Value("${spring.redis.database}")
+	private int database;
 
 	@Value("${spring.redis.host}")
 	private String host;
@@ -65,7 +67,6 @@ public class ShiroConfig {
 	public DefaultWebSecurityManager securityManager(ShiroRealm myRealm) {
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 		securityManager.setRealm(myRealm);
-
 		/*
 		 * 关闭shiro自带的session，详情见文档
 		 */
@@ -114,7 +115,7 @@ public class ShiroConfig {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(redisManager());
         //redis中针对不同用户缓存(此处的id需要对应user实体中的id字段,用于唯一标识)
-        redisCacheManager.setPrincipalIdFieldName("id");
+        redisCacheManager.setPrincipalIdFieldName("username");
         //用户权限信息缓存时间
         redisCacheManager.setExpire(200000);
         return redisCacheManager;
@@ -131,6 +132,7 @@ public class ShiroConfig {
         log.info("===============(2)创建RedisManager,连接Redis..URL= " + host + ":" + port);
         RedisManager redisManager = new RedisManager();
 		redisManager.setHost(host+ ":" + port);
+		redisManager.setDatabase(database);
 		redisManager.setTimeout(0);
         if (!StringUtils.isEmpty(redisPassword)) {
             redisManager.setPassword(redisPassword);

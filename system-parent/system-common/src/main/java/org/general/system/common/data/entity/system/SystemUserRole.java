@@ -12,9 +12,6 @@ import org.general.system.common.data.entity.BaseEntity;
 @Data
 public class SystemUserRole extends BaseEntity {
 
-	/** 主键 */
-	private Long id;
-
 	/** 用户id */
 	private Long userId;
 

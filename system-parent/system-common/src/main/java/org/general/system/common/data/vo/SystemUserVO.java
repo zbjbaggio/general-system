@@ -1,12 +1,13 @@
 package org.general.system.common.data.vo;
 
 import lombok.Data;
-import org.general.system.common.data.entity.system.SystemPermission;
 
 import java.util.Set;
 
 @Data
 public class SystemUserVO {
+
+    private Long id;
 
     // token
     private String token;
@@ -15,6 +16,6 @@ public class SystemUserVO {
     private String username;
 
     // 权限
-    private Set<SystemPermission> permissionSet;
+    private Set<String> permissionSet;
 
 }
