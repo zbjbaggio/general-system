@@ -2,11 +2,13 @@ package org.general.system.admin.controller.advice.sysem;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.general.system.admin.shiro.ShiroRealm;
 import org.general.system.common.constants.SystemUserStatus;
 import org.general.system.common.controller.BaseController;
 import org.general.system.common.data.entity.BaseEntity;
 import org.general.system.common.data.entity.system.SystemUser;
 import org.general.system.common.data.page.TableDataInfo;
+import org.general.system.common.service.RedisService;
 import org.general.system.common.service.system.SystemRoleService;
 import org.general.system.common.service.system.SystemUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +27,14 @@ public class UserController extends BaseController {
     @Autowired
     private SystemRoleService systemRoleService;
 
+    @Autowired
+    private RedisService shiroRealm;
+
     /**
-     * 用户查询
+     * 系统用户查询
      * @param searchStr
      * @param status
-     * @return
+     * @return 系统用户列表
      */
     @RequiresPermissions("system:user:list")
     @GetMapping(value = "/list")
@@ -37,6 +42,7 @@ public class UserController extends BaseController {
                               @RequestParam(value = "status", defaultValue = "-1") int status) {
         startPage();
         SystemUser systemUser = new SystemUser();
+        shiroRealm.delete("");
         return getDataTable(systemUserService.selectSystemUserList(systemUser));
     }
 
@@ -54,10 +60,10 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 管理员详情
+     * 系统用户详情
      *
      * @param userId 系统用户id
-     * @return
+     * @return 系统用户详情
      */
     @RequiresPermissions("system:user:getDetail")
     @GetMapping(value = "/getDetail/{userId}")
@@ -77,7 +83,7 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 管理员解锁
+     * 系统用户解冻
      *
      * @param userId 用户id
      */

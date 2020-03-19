@@ -12,4 +12,6 @@ public interface RedisService {
     void saveSystemLogin(SystemUserVO login);
 
     SystemUserVO getSystemLogin(String username);
+
+    void delete(String key);
 }

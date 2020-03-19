@@ -50,6 +50,11 @@ public class RedisServiceImpl implements RedisService {
         return get(SYSTEM_USER_LOGIN_KEY + username, SystemUserVO.class);
     }
 
+    @Override
+    public void delete(String key) {
+        template.delete("shiro:cache:org.general.system.admin.shiro.ShiroRealm.authorizationCache:admin");
+    }
+
 
     private void save(String key, Object value, long time, TimeUnit timeUnit) {
         ValueOperations<String, String> ops = template.opsForValue();

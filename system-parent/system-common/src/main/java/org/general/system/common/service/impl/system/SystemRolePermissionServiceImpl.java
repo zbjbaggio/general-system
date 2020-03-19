@@ -54,7 +54,7 @@ public class SystemRolePermissionServiceImpl implements SystemRolePermissionServ
 	public SystemRolePermission insertSystemRolePermission(SystemRolePermission systemRolePermission) {
 		int count = systemRolePermissionMapper.insertSystemRolePermission(systemRolePermission);
 		if (count != 1) {
-			throw new PrivateException(ErrorInfo.SAVE_ERROR);
+			throw new PrivateException(ErrorInfo.ADD_ERROR);
 		}
 		return systemRolePermission;
 	}

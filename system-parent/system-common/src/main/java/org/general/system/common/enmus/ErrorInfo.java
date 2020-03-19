@@ -13,7 +13,7 @@ public enum ErrorInfo {
     MOBILE_LOGIN_ERROR(50002, "会员号或者密码错误！"),
     LOGIN_AGAIN(50003, "重新登录！"),
     NO_LOGIN(50004, "未登录！"),
-    NO_AUTHORITY(50005, "未权限！"),
+    NO_AUTHORITY(50005, "未受权！"),
     USER_NAME_SAME(50006, "用户名重复！"),
     REGISTER_ERROR(50007, "用户注册失败！" ),
     USER_LOCKED(50008, "该用户已被锁定，请联系管理员！" ),

@@ -7,7 +7,9 @@ import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.crazycake.shiro.IRedisManager;
 import org.crazycake.shiro.RedisCacheManager;
+import org.crazycake.shiro.RedisClusterManager;
 import org.crazycake.shiro.RedisManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,11 +26,11 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
-	@Value("${spring.redis.port}")
-	private String port;
-
 	@Value("${spring.redis.database}")
 	private int database;
+
+	@Value("${spring.redis.port}")
+	private String port;
 
 	@Value("${spring.redis.host}")
 	private String host;
@@ -111,7 +113,6 @@ public class ShiroConfig {
      * @return
      */
     public RedisCacheManager redisCacheManager() {
-        log.info("===============(1)创建缓存管理器RedisCacheManager");
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(redisManager());
         //redis中针对不同用户缓存(此处的id需要对应user实体中的id字段,用于唯一标识)
@@ -128,9 +129,9 @@ public class ShiroConfig {
      * @return
      */
     @Bean
-    public RedisManager redisManager() {
-        log.info("===============(2)创建RedisManager,连接Redis..URL= " + host + ":" + port);
-        RedisManager redisManager = new RedisManager();
+    public IRedisManager redisManager() {
+		//RedisClusterManager redisManager = new RedisClusterManager();
+		RedisManager redisManager = new RedisManager();
 		redisManager.setHost(host+ ":" + port);
 		redisManager.setDatabase(database);
 		redisManager.setTimeout(0);

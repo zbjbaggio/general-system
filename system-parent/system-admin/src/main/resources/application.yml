@@ -54,6 +54,11 @@ spring:
     host: 192.168.101.2
     password: ''
     port: 6379
+#    cluster:
+#      max-redirects: 3  # 获取失败 最大重定向次数
+#      nodes:
+#        - 192.168.101.2:6379
+#        -
     lettuce:
       pool:
         max-active: 8   #最大连接数据库连接数,设 0 为没有限制
@@ -79,7 +84,6 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
 
-
 # 代码生成
 gen:
   # 作者
@@ -90,3 +94,7 @@ gen:
   autoRemovePrefix: true
   # 表前缀(类名不会包含表前缀)
   tablePrefix: t_
+
+# 日志
+logging:
+  config: classpath:logback.xml
