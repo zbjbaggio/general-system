@@ -1,7 +1,6 @@
 package org.general.system.admin.shiro;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.general.system.admin.constants.Constants;
 import org.springframework.http.HttpStatus;
