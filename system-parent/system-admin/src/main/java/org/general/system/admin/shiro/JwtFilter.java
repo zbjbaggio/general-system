@@ -3,6 +3,7 @@ package org.general.system.admin.shiro;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
+import org.general.system.admin.constants.Constants;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -19,8 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class JwtFilter extends BasicHttpAuthenticationFilter {
 
-	private final String X_ACCESS_TOKEN = "X-Access-Token";
-
 	/**
 	 * 执行登录认证
 	 *
@@ -32,7 +31,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String token = httpServletRequest.getHeader(X_ACCESS_TOKEN);
+        String token = httpServletRequest.getHeader(Constants.X_ACCESS_TOKEN);
         JwtToken jwtToken = new JwtToken(token);
         getSubject(request, response).login(jwtToken);
         return true;
@@ -59,9 +58,11 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 	protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-		httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
-		httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
-		httpServletResponse.setHeader("Access-Control-Allow-Headers", httpServletRequest.getHeader("Access-Control-Request-Headers"));
+		httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
+		httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
+		httpServletResponse.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, OPTIONS, DELETE");
+		httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
+		httpServletResponse.setHeader("Access-Control-Allow-Headers", "Origin, x-requested-with, Content-Type, Accept, X-Access-Token");
 		// 跨域时会首先发送一个option请求，这里我们给option请求直接返回正常状态
 		if (httpServletRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
 			httpServletResponse.setStatus(HttpStatus.OK.value());

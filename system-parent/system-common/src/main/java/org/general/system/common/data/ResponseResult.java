@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class ResponseResult implements Serializable {
 
     // 响应业务状态
-    private Integer status;
+    private Integer code;
 
     // 响应消息
     private String msg;
@@ -35,7 +35,7 @@ public class ResponseResult implements Serializable {
     public static ResponseResult buildForValidated() { return build(ErrorInfo.PARAMS_ERROR); }
 
     public ResponseResult(Integer status, String msg, Object data) {
-        this.status = status;
+        this.code = status;
         this.msg = msg;
         this.data = data;
     }
