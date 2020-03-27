@@ -1,7 +1,7 @@
 package org.general.system.common.service;
 
 
-import org.general.system.common.data.vo.SystemUserVO;
+import org.general.system.common.data.vo.system.SystemUserVO;
 
 /**
  * 描述：redis 服务

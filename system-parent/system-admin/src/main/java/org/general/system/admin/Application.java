@@ -24,7 +24,7 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-/*    @Bean
+    @Bean
     public FilterRegistrationBean someFilterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(corsFilter());
@@ -38,5 +38,5 @@ public class Application {
     @Bean(name = "corsFilter")
     public Filter corsFilter() {
         return new CORSFilter();
-    }*/
+    }
 }

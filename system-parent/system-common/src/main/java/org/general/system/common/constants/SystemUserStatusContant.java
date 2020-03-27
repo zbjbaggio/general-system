@@ -1,6 +1,6 @@
 package org.general.system.common.constants;
 
-public interface SystemUserStatus {
+public interface SystemUserStatusContant {
 
     int UNFREEZE = 1;
 

@@ -1,13 +1,10 @@
 package org.general.system.admin.controller.advice;
 
-import com.auth0.jwt.JWT;
-import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.general.system.admin.data.vo.CatpchaVO;
 import org.general.system.common.data.dto.SystemUserDTO;
-import org.general.system.common.data.vo.SystemUserVO;
+import org.general.system.common.data.vo.system.SystemUserVO;
 import org.general.system.common.service.system.SystemUserService;
 import org.general.system.common.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +18,9 @@ import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 @Slf4j

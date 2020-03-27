@@ -1,7 +1,7 @@
 package org.general.system.common.data.entity.system;
 
 import lombok.Data;
-import org.general.system.common.constants.SystemUserStatus;
+import org.general.system.common.constants.SystemUserStatusContant;
 import org.general.system.common.data.entity.BaseEntity;
 
 import javax.validation.constraints.NotEmpty;
@@ -28,7 +28,7 @@ public class SystemUser extends BaseEntity {
 
 	/**
 	 * 状态(1-正常,2-冻结)
-	 * {@link SystemUserStatus}
+	 * {@link SystemUserStatusContant}
 	 * */
 	private Integer status;
 

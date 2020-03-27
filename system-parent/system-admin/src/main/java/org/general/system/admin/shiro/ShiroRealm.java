@@ -9,16 +9,13 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.general.system.common.data.vo.SystemUserVO;
+import org.general.system.common.data.vo.system.SystemUserVO;
 import org.general.system.common.service.RedisService;
 import org.general.system.common.service.system.SystemUserService;
 import org.general.system.common.utils.JwtUtil;
 import org.general.system.common.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @Description: 用户登录鉴权和获取用户授权

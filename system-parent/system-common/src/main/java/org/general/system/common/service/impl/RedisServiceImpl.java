@@ -2,16 +2,13 @@ package org.general.system.common.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import lombok.extern.log4j.Log4j;
-import org.general.system.common.data.vo.SystemUserVO;
+import org.general.system.common.data.vo.system.SystemUserVO;
 import org.general.system.common.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**

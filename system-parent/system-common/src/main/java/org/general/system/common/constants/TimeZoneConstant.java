@@ -2,5 +2,5 @@ package org.general.system.common.constants;
 
 public interface TimeZoneConstant {
 
-    String DEFAULT = "GMT-8";
+    String DEFAULT = "GMT+8";
 }

@@ -1,16 +1,20 @@
 package org.general.system.common.service.impl.system;
 
 import lombok.extern.slf4j.Slf4j;
+import org.general.system.common.constants.SystemUserStatusContant;
 import org.general.system.common.data.dto.SystemUserDTO;
 import org.general.system.common.data.entity.system.SystemUser;
-import org.general.system.common.data.vo.SystemUserVO;
+import org.general.system.common.data.vo.system.MenuAndButtonVO;
+import org.general.system.common.data.vo.system.SystemUserVO;
 import org.general.system.common.enmus.ErrorInfo;
 import org.general.system.common.exception.PrivateException;
 import org.general.system.common.mapper.system.SystemUserMapper;
 import org.general.system.common.service.RedisService;
+import org.general.system.common.service.system.SystemPermissionService;
 import org.general.system.common.service.system.SystemUserService;
 import org.general.system.common.utils.JwtUtil;
 import org.general.system.common.utils.PasswordUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +24,7 @@ import java.util.UUID;
 
 /**
  * 系统用户 服务层实现
- * 
+ *
  * @author eason
  * @date 2020-03-06
  */
@@ -30,6 +34,9 @@ public class SystemUserServiceImpl implements SystemUserService {
 
 	@Autowired
 	private SystemUserMapper systemUserMapper;
+
+	@Autowired
+	private SystemPermissionService systemPermissionService;
 
 	@Autowired
 	private RedisService redisService;
@@ -55,6 +62,8 @@ public class SystemUserServiceImpl implements SystemUserService {
 			throw new PrivateException(ErrorInfo.LOGIN_ERROR);
 		}
 		SystemUserVO systemUserVO = new SystemUserVO();
+		MenuAndButtonVO menu = systemPermissionService.getMenu(systemUser.getId());
+		BeanUtils.copyProperties(menu, systemUserVO);
 		systemUserVO.setId(systemUser.getId());
 		systemUserVO.setUsername(systemUser.getUsername());
 		systemUserVO.setToken(JwtUtil.sign(systemUserVO.getUsername(), UUID.randomUUID().toString()));
@@ -75,7 +84,7 @@ public class SystemUserServiceImpl implements SystemUserService {
 	/**
 	 * 根据用户id修改用户状态
 	 * @param userId 用户id
-	 * @param freeze 状态 {@link org.general.system.common.constants.SystemUserStatus}
+	 * @param freeze 状态 {@link SystemUserStatusContant}
 	 */
 	@Override
 	public void updateStatus(Long userId, int freeze) {
@@ -84,7 +93,7 @@ public class SystemUserServiceImpl implements SystemUserService {
 
 	/**
      * 查询系统用户信息
-     * 
+     *
      * @param id 系统用户ID
      * @return 系统用户信息
      */
@@ -92,10 +101,10 @@ public class SystemUserServiceImpl implements SystemUserService {
 	public SystemUser selectSystemUserById(Long id) {
 	    return systemUserMapper.selectSystemUserById(id);
 	}
-	
+
 	/**
      * 查询系统用户列表
-     * 
+     *
      * @param systemUser 系统用户信息
      * @return 系统用户集合
      */
@@ -103,10 +112,10 @@ public class SystemUserServiceImpl implements SystemUserService {
 	public List<SystemUser> selectSystemUserList(SystemUser systemUser) {
 	    return systemUserMapper.selectSystemUserList(systemUser);
 	}
-	
+
     /**
      * 新增系统用户
-     * 
+     *
      * @param systemUser 系统用户信息
      * @return 返回带有id的用户信息
      */
@@ -119,10 +128,10 @@ public class SystemUserServiceImpl implements SystemUserService {
 		}
 		return systemUser;
 	}
-	
+
 	/**
      * 修改系统用户
-     * 
+     *
      * @param systemUser 系统用户信息
      * @return 结果
      */
@@ -133,7 +142,7 @@ public class SystemUserServiceImpl implements SystemUserService {
 
 	/**
      * 删除系统用户对象
-     * 
+     *
      * @param ids 需要删除的数据ID
      * @return 结果
      */

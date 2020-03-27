@@ -2,8 +2,7 @@ package org.general.system.admin.controller.advice.sysem;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.general.system.admin.shiro.ShiroRealm;
-import org.general.system.common.constants.SystemUserStatus;
+import org.general.system.common.constants.SystemUserStatusContant;
 import org.general.system.common.controller.BaseController;
 import org.general.system.common.data.entity.BaseEntity;
 import org.general.system.common.data.entity.system.SystemUser;
@@ -79,7 +78,7 @@ public class UserController extends BaseController {
     @RequiresPermissions("system:user:freeze")
     @PostMapping(value = "/freeze/{userId}")
     public void freeze(@PathVariable Long userId) {
-        systemUserService.updateStatus(userId, SystemUserStatus.FREEZE);
+        systemUserService.updateStatus(userId, SystemUserStatusContant.FREEZE);
     }
 
     /**
@@ -90,7 +89,7 @@ public class UserController extends BaseController {
     @RequiresPermissions("system:user:unFreeze")
     @PostMapping(value = "/unFreeze/{userId}")
     public void unFreeze(@PathVariable Long userId) {
-        systemUserService.updateStatus(userId, SystemUserStatus.UNFREEZE);
+        systemUserService.updateStatus(userId, SystemUserStatusContant.UNFREEZE);
     }
 
 }

@@ -24,7 +24,16 @@ public class SystemPermission extends BaseEntity {
 	/** 菜单图标 */
 	private String icon;
 
-	/** 类型 0 菜单 1 按钮 */
+	/**
+	 * 类型 0 菜单 1 按钮
+	 * {@link org.general.system.common.constants.PermissionType }
+	 * */
 	private Integer type;
+
+	/** 前端权限 */
+	private String router;
+
+	/** 后端权限 */
+	private String permission;
 
 }

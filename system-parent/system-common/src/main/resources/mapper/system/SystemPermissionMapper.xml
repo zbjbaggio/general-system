@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.general.system.common.mapper.system.SystemPermissionMapper">
-    
+
     <resultMap type="org.general.system.common.data.entity.system.SystemPermission" id="SystemPermissionResult">
         <result property="id"    column="id"    />
         <result property="createTime"    column="create_time"    />
@@ -13,15 +13,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="code"    column="code"    />
         <result property="icon"    column="icon"    />
         <result property="type"    column="type"    />
+        <result property="router"    column="router"    />
+        <result property="permission"    column="permission"    />
     </resultMap>
-	
+
+    <resultMap type="org.general.system.common.data.vo.system.PermissionVO" id="PermissionVOResult" extends="SystemPermissionResult">
+
+    </resultMap>
+
 	<sql id="selectSystemPermissionVo">
-        select id, create_time, update_time, parent_id, name, code, icon, type from t_system_permission
+        select id, create_time, update_time, parent_id, name, code, icon, type, router, permission from t_system_permission
     </sql>
-	
+
     <select id="selectSystemPermissionList" parameterType="org.general.system.common.data.entity.system.SystemPermission" resultMap="SystemPermissionResult">
         <include refid="selectSystemPermissionVo"/>
-        <where>  
+        <where>
             <if test="id != null "> and id = #{id}</if>
              <if test="createTime != null "> and create_time = #{createTime}</if>
              <if test="updateTime != null "> and update_time = #{updateTime}</if>
@@ -32,12 +38,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="type != null "> and type = #{type}</if>
          </where>
     </select>
-    
+
     <select id="selectSystemPermissionById" parameterType="Long" resultMap="SystemPermissionResult">
         <include refid="selectSystemPermissionVo"/>
         where id = #{id}
     </select>
-        
+
+    <select id="listByUserId" parameterType="Long"  resultMap="PermissionVOResult" >
+      SELECT distinct a.name,a.parent_id,a.type,a.router,a.permission,a.icon,a.code
+      FROM t_system_permission a
+      JOIN t_system_role_permission b on a.id = b.permission_id
+	  JOIN t_system_user_role c on c.role_id = b.role_id
+	  WHERE c.user_id = #{userId} order by code
+    </select>
+
     <insert id="insertSystemPermission" parameterType="org.general.system.common.data.entity.system.SystemPermission" useGeneratedKeys="true" keyProperty="id">
         insert into t_system_permission
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -59,7 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="type != null  ">#{type},</if>
          </trim>
     </insert>
-	 
+
     <update id="updateSystemPermission" parameterType="org.general.system.common.data.entity.system.SystemPermission">
         update t_system_permission
         <trim prefix="SET" suffixOverrides=",">
@@ -77,12 +91,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteSystemPermissionById" parameterType="Long">
         delete from t_system_permission where id = #{id}
     </delete>
-	
+
     <delete id="deleteSystemPermissionByIds" parameterType="String">
-        delete from t_system_permission where id in 
+        delete from t_system_permission where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
-    
+
 </mapper>
