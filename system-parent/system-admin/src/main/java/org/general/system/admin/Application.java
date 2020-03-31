@@ -2,6 +2,7 @@ package org.general.system.admin;
 
 import org.general.system.admin.filter.CORSFilter;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -17,11 +18,13 @@ import javax.servlet.Filter;
 @ComponentScan("org.general.system")
 @SpringBootApplication
 @MapperScan("org.general.system.**.mapper")
-@RestController
 public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        //SpringApplication.run(Application.class, args);
+        SpringApplication springApplication = new SpringApplication(Application.class);
+        springApplication.setBannerMode(Banner.Mode.OFF);
+        springApplication.run(args);
     }
 
     @Bean
@@ -39,4 +42,5 @@ public class Application {
     public Filter corsFilter() {
         return new CORSFilter();
     }
+
 }

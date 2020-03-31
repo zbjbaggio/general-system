@@ -1,6 +1,11 @@
 package org.general.system.admin.filter;
 
+import org.general.system.admin.constants.Constants;
+import org.general.system.admin.utils.ValueHolder;
+import org.general.system.common.utils.JwtUtil;
+import org.general.system.common.utils.StringUtil;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -16,6 +21,9 @@ import java.io.IOException;
 @Component
 public class CORSFilter implements Filter {
 
+    @Autowired
+    private ValueHolder valueHolder;
+
     /**
      * Adds CORS headers to the response. Then calls {@link FilterChain#doFilter} on the rest of the chain.
      *
@@ -28,6 +36,10 @@ public class CORSFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        String header = httpServletRequest.getHeader(Constants.X_ACCESS_TOKEN);
+        if (!StringUtil.isEmpty(header)) {
+            valueHolder.setUserNameHolder(JwtUtil.getUsername(header));
+        }
         MDC.put("sessionId", httpServletRequest.getSession().getId());
         HttpServletResponse servletResponse = (HttpServletResponse) response;
         servletResponse.setHeader("Access-Control-Allow-Origin", "*");

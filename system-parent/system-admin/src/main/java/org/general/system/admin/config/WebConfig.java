@@ -1,6 +1,6 @@
+/*
 package org.general.system.admin.config;
 
-import org.general.system.admin.filter.SessionIdInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -17,3 +17,4 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(sessionIdInterceptor).addPathPatterns("/*");
     }
 }
+*/

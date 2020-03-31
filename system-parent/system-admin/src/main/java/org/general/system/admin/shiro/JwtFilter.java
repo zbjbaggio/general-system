@@ -3,7 +3,11 @@ package org.general.system.admin.shiro;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.general.system.admin.constants.Constants;
+import org.general.system.admin.utils.ValueHolder;
+import org.general.system.common.utils.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
