@@ -1,10 +1,12 @@
 package org.general.system.admin.controller.advice;
 
 import com.google.code.kaptcha.Producer;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.general.system.admin.data.vo.CatpchaVO;
 import org.general.system.common.data.dto.SystemUserDTO;
 import org.general.system.common.data.vo.system.SystemUserVO;
+import org.general.system.common.service.system.SystemPermissionService;
 import org.general.system.common.service.system.SystemUserService;
 import org.general.system.common.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +27,14 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class LoginController {
 
-    @Autowired
-    private SystemUserService systemUserService;
+    private final SystemUserService systemUserService;
 
-    @Autowired
-    private Producer kaptchaProducer;
+    private final Producer kaptchaProducer;
+
+    private final SystemPermissionService systemPermissionService;
 
     @GetMapping(value = "/captcha")
     public CatpchaVO captcha() throws IOException {
@@ -70,9 +73,9 @@ public class LoginController {
         return systemUserService.login(systemUserDTO);
     }
 
-    @GetMapping(value = "/notLogin")
-    public Object notLogin(@RequestBody @Validated(SystemUserDTO.LoginGroup.class) SystemUserDTO systemUserDTO, HttpServletRequest request, BindingResult bindingResult) {
-        return "aaaaa";
+    @GetMapping(value = "/test")
+    public Object test() {
+        return systemPermissionService.getMenu(1L);
     }
 
 

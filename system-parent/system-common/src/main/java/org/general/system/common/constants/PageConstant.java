@@ -5,7 +5,7 @@ public interface PageConstant {
     /**
      * 当前记录起始索引
      */
-    String PAGE_NUM = "pageNum";
+    String PAGE_NUM = "pageNumber";
 
     /**
      * 每页显示记录数

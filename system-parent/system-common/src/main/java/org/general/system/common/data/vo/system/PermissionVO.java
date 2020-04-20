@@ -1,10 +1,9 @@
 package org.general.system.common.data.vo.system;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
-import org.general.system.common.data.entity.system.SystemPermission;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,15 +14,15 @@ import java.util.List;
 @ToString(callSuper = true, exclude = {"createTime"})
 public class PermissionVO {
 
+    private Long id;
+
     private Long parentId;
 
     private int type;
 
     private String permission;
 
-
-
-    private String code;
+    //private String code;
 
     private String path;
 
@@ -43,6 +42,9 @@ public class PermissionVO {
         private String title;
 
         private String icon;
+
+        // 页面拥有的权限
+        private List<String> permission = new ArrayList<>();
 
     }
 

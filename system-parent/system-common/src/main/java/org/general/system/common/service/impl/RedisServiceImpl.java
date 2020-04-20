@@ -1,6 +1,7 @@
 package org.general.system.common.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.general.system.common.data.vo.system.SystemUserVO;
 import org.general.system.common.service.RedisService;
@@ -17,6 +18,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 @Log4j
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class RedisServiceImpl implements RedisService {
 
     // 系统用户登录key前缀
@@ -25,8 +27,7 @@ public class RedisServiceImpl implements RedisService {
     // 系统用户保存redis时长为30分钟
     private final int SYSTEM_USER_LOGIN_MINUTES = 30;
 
-    @Autowired
-    private StringRedisTemplate template;
+    private final StringRedisTemplate template;
 
     /**
      * 系统登录用户信息保存

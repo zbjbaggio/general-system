@@ -1,5 +1,6 @@
 package org.general.system.common.service.impl.system;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.general.system.common.constants.SystemUserStatusContant;
 import org.general.system.common.data.dto.SystemUserDTO;
@@ -31,16 +32,14 @@ import java.util.UUID;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class SystemUserServiceImpl implements SystemUserService {
 
-	@Autowired
-	private SystemUserMapper systemUserMapper;
+	private final SystemUserMapper systemUserMapper;
 
-	@Autowired
-	private SystemPermissionService systemPermissionService;
+	private final SystemPermissionService systemPermissionService;
 
-	@Autowired
-	private RedisService redisService;
+	private final RedisService redisService;
 
 	/**
 	 * 管理系统用户登录
@@ -65,14 +64,11 @@ public class SystemUserServiceImpl implements SystemUserService {
 		SystemUserVO systemUserVO = new SystemUserVO();
 		MenuAndButtonVO menu = systemPermissionService.getMenu(systemUser.getId());
 		BeanUtils.copyProperties(menu, systemUserVO);
-		List<PermissionVO> routerList = systemUserVO.getRouterList();
-		PermissionVO permissionVO = routerList.get(0);
-		PermissionVO permissionVO1 = permissionVO.getChildren().get(0);
-		permissionVO1.setName("1111111111111");
 		systemUserVO.setId(systemUser.getId());
 		systemUserVO.setUsername(systemUser.getUsername());
 		systemUserVO.setToken(JwtUtil.sign(systemUserVO.getUsername(), UUID.randomUUID().toString()));
 		redisService.saveSystemLogin(systemUserVO);
+		systemUserVO.setPermissionSet(null);
 		return systemUserVO;
 	}
 

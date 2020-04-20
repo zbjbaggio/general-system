@@ -1,5 +1,6 @@
 package org.general.system.admin.controller.advice.sysem;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.general.system.common.constants.SystemUserStatusContant;
@@ -16,10 +17,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @RequestMapping("/user/system/user")
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class UserController extends BaseController {
 
-    @Autowired
-    private SystemUserService systemUserService;
+    private final SystemUserService systemUserService;
 
     /**
      * 系统用户查询
@@ -29,8 +30,11 @@ public class UserController extends BaseController {
      */
     @RequiresPermissions("system:user:list")
     @GetMapping(value = "/list")
-    public TableDataInfo list(@RequestParam(value = "searchStr", defaultValue = "-1") String searchStr,
-                              @RequestParam(value = "status", defaultValue = "-1") int status) {
+    public TableDataInfo list(@RequestParam(defaultValue = "-1") String searchStr,
+                              @RequestParam(defaultValue = "-1") int status,
+                              @RequestParam(defaultValue = "1") int pageNumber,
+                              @RequestParam(defaultValue = "10") int pageSize) {
+        startPage();
         SystemUser systemUser = new SystemUser();
         return getDataTable(systemUserService.selectSystemUserList(systemUser));
     }

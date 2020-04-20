@@ -1,5 +1,5 @@
 datasource:
-  url: 123.57.225.54:2206
+  url: 123.57.225.54:3306
   username: root
   password: wertyujdkdkdkdk
 server:

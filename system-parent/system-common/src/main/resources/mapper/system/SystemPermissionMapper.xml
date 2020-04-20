@@ -18,9 +18,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <resultMap type="org.general.system.common.data.vo.system.PermissionVO" id="PermissionVOResult">
+        <result property="id"    column="id"    />
         <result property="path"    column="router"    />
         <result property="type"    column="type"    />
         <result property="permission"    column="permission"    />
+        <result property="name"    column="name"    />
         <result property="parentId"    column="parent_id"    />
         <collection property="meta" ofType="org.general.system.common.data.vo.system.PermissionVO$Meta">
             <result property="title" column="name" />
@@ -52,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="listByUserId" parameterType="Long"  resultMap="PermissionVOResult" >
-      SELECT distinct a.name,a.parent_id,a.type,a.router,a.permission,a.icon,a.code
+      SELECT distinct a.id,a.name,a.parent_id,a.type,a.router,a.permission,a.icon
       FROM t_system_permission a
       JOIN t_system_role_permission b on a.id = b.permission_id
 	  JOIN t_system_user_role c on c.role_id = b.role_id

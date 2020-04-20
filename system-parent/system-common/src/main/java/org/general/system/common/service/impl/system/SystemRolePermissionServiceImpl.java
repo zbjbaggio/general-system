@@ -1,5 +1,6 @@
 package org.general.system.common.service.impl.system;
 
+import lombok.RequiredArgsConstructor;
 import org.general.system.common.data.entity.system.SystemRolePermission;
 import org.general.system.common.enmus.ErrorInfo;
 import org.general.system.common.exception.PrivateException;
@@ -12,19 +13,19 @@ import java.util.List;
 
 /**
  * 角色权限 服务层实现
- * 
+ *
  * @author eason
  * @date 2020-03-05
  */
 @Service
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class SystemRolePermissionServiceImpl implements SystemRolePermissionService {
 
-	@Autowired
-	private SystemRolePermissionMapper systemRolePermissionMapper;
+	private final SystemRolePermissionMapper systemRolePermissionMapper;
 
 	/**
      * 查询角色权限信息
-     * 
+     *
      * @param id 角色权限ID
      * @return 角色权限信息
      */
@@ -32,10 +33,10 @@ public class SystemRolePermissionServiceImpl implements SystemRolePermissionServ
 	public SystemRolePermission selectSystemRolePermissionById(Long id) {
 	    return systemRolePermissionMapper.selectSystemRolePermissionById(id);
 	}
-	
+
 	/**
      * 查询角色权限列表
-     * 
+     *
      * @param systemRolePermission 角色权限信息
      * @return 角色权限集合
      */
@@ -43,10 +44,10 @@ public class SystemRolePermissionServiceImpl implements SystemRolePermissionServ
 	public List<SystemRolePermission> selectSystemRolePermissionList(SystemRolePermission systemRolePermission) {
 	    return systemRolePermissionMapper.selectSystemRolePermissionList(systemRolePermission);
 	}
-	
+
     /**
      * 新增角色权限
-     * 
+     *
      * @param systemRolePermission 角色权限信息
      * @return 结果
      */
@@ -58,10 +59,10 @@ public class SystemRolePermissionServiceImpl implements SystemRolePermissionServ
 		}
 		return systemRolePermission;
 	}
-	
+
 	/**
      * 修改角色权限
-     * 
+     *
      * @param systemRolePermission 角色权限信息
      * @return 结果
      */
@@ -72,7 +73,7 @@ public class SystemRolePermissionServiceImpl implements SystemRolePermissionServ
 
 	/**
      * 删除角色权限对象
-     * 
+     *
      * @param ids 需要删除的数据ID
      * @return 结果
      */
@@ -80,5 +81,5 @@ public class SystemRolePermissionServiceImpl implements SystemRolePermissionServ
 	public int deleteSystemRolePermissionByIds(Long[] ids) {
 		return systemRolePermissionMapper.deleteSystemRolePermissionByIds(ids);
 	}
-	
+
 }

@@ -14,7 +14,7 @@ public class MenuAndButtonVO {
 
     private Set<String> permissionSet;
 
-    private List<PermissionVO> routerList;
+    private List<PermissionVO> routers;
 
     private Set<String> buttonSet;
 }

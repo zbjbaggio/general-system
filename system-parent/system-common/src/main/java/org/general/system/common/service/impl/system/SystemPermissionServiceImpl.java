@@ -1,5 +1,6 @@
 package org.general.system.common.service.impl.system;
 
+import lombok.RequiredArgsConstructor;
 import org.general.system.common.constants.PermissionTypeContant;
 import org.general.system.common.data.entity.system.SystemPermission;
 import org.general.system.common.data.vo.system.MenuAndButtonVO;
@@ -21,10 +22,10 @@ import java.util.Set;
  * @date 2020-03-06
  */
 @Service
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class SystemPermissionServiceImpl implements SystemPermissionService {
 
-	@Autowired
-	private SystemPermissionMapper systemPermissionMapper;
+	private final SystemPermissionMapper systemPermissionMapper;
 
 	/**
      * 查询菜单权限信息
@@ -83,33 +84,32 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
 
 	/**
 	 * '根据系统用户id获取菜单list 后端list 按钮list
-	 * @param systemUserId
-	 * @return
+	 * @param systemUserId 登录用户id
+	 * @return 菜单和权限
 	 */
 	@Override
 	public MenuAndButtonVO getMenu(long systemUserId) {
 		//查询权限
 		List<PermissionVO> permissionVOS = systemPermissionMapper.listByUserId(systemUserId);
 		Set<String> permissionSet = new HashSet<>();
-		List<PermissionVO> menuList = new ArrayList<>();
-		Set<String> buttonSet = new HashSet<>();
+		List<PermissionVO> routerList = new ArrayList<>();
 		for (PermissionVO permissionVO : permissionVOS) {
 			if (permissionVO.getPermission() != null) {
 				permissionSet.add(permissionVO.getPermission());
 			}
 			// 一级菜单没有parentId
 			if (-1L == permissionVO.getParentId()) {
-				menuList.add(permissionVO);
+				routerList.add(permissionVO);
 			} else if (PermissionTypeContant.MENU == permissionVO.getType()) {
-				setChild(menuList.get(menuList.size() - 1), permissionVO);
+				setChild(routerList.get(routerList.size() - 1), permissionVO);
 			} else if (PermissionTypeContant.BUTTON == permissionVO.getType()) {
-				buttonSet.add(permissionVO.getPermission());
+				setButton(routerList.get(routerList.size() - 1), permissionVO);
+				//routerList.get(routerList.size() - 1).setMeta(meta);
 			}
 		}
 		MenuAndButtonVO menuAndButtonDTO = new MenuAndButtonVO();
-		menuAndButtonDTO.setRouterList(menuList);
+		menuAndButtonDTO.setRouters(routerList);
 		menuAndButtonDTO.setPermissionSet(permissionSet);
-		menuAndButtonDTO.setButtonSet(buttonSet);
 		return menuAndButtonDTO;
 	}
 
@@ -118,12 +118,21 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
 		if (child == null) {
 			child = new ArrayList<>();
 			child.add(childrenPermissionVO);
-		} else if (child.get(child.size() - 1).getParentId() == childrenPermissionVO.getParentId()) {
+		} else if (child.get(child.size() - 1).getParentId().equals(childrenPermissionVO.getParentId())) {
 			child.add(childrenPermissionVO);
 		} else {
 			setChild(child.get(child.size() - 1), childrenPermissionVO);
 		}
 		parentPermission.setChildren(child);
+	}
+
+	private void setButton(PermissionVO parentPermission, PermissionVO childrenPermissionVO) {
+		if (parentPermission.getId().equals(childrenPermissionVO.getParentId())) {
+			parentPermission.getMeta().getPermission().add(childrenPermissionVO.getPermission());
+		} else {
+			List<PermissionVO> children = parentPermission.getChildren();
+			setButton(children.get(children.size() - 1), childrenPermissionVO);
+		}
 	}
 
 }
