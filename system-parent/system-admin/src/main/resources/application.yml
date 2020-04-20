@@ -1,5 +1,9 @@
+datasource:
+  url: 123.57.225.54:2206
+  username: root
+  password: wertyujdkdkdkdk
 server:
-  port: 8090
+  port: 8091
   tomcat:
     uri-encoding: UTF-8
   servlet:
@@ -8,12 +12,6 @@ server:
     enabled: true
     min-response-size: 1024
     mime-types: application/json
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: metrics,httptrace
 
 spring:
   servlet:
@@ -24,9 +22,9 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.101.2:3306/general_system?useUnicode=true&characterEncoding=utf-8&useSSL=false
-    username: root
-    password: 123456
+    url: jdbc:mysql://${datasource.url}/general_system?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: ${datasource.username}
+    password: ${datasource.password}
     # Hikari 连接池配置
     hikari:
       # 最小空闲连接数量
@@ -50,7 +48,7 @@ spring:
     time-zone: GMT+8
   #redis 配置
   redis:
-    database: 1
+    database: 11
     host: 192.168.101.2
     password: ''
     port: 6379

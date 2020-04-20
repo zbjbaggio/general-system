@@ -40,6 +40,7 @@ public class CORSFilter implements Filter {
         if (!StringUtil.isEmpty(header)) {
             valueHolder.setUserNameHolder(JwtUtil.getUsername(header));
         }
+        // 日志sessionId赋值
         MDC.put("sessionId", httpServletRequest.getSession().getId());
         HttpServletResponse servletResponse = (HttpServletResponse) response;
         servletResponse.setHeader("Access-Control-Allow-Origin", "*");

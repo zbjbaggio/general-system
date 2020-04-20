@@ -1,7 +1,6 @@
 package org.general.system.admin.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.AuthorizationException;
 import org.general.system.common.data.ResponseResult;
 import org.general.system.common.enmus.ErrorInfo;
 import org.general.system.common.exception.PrivateException;
@@ -58,17 +57,17 @@ public class ExceptionControllerAdvice implements ResponseBodyAdvice<Object> {
         return ResponseResult.build(e.getCode(), e.getMsg());
     }
 
-    @ExceptionHandler()
+   /* @ExceptionHandler()
     @ResponseBody
     public ResponseResult handler(AuthorizationException e) {
-        log.info(e.toString());
+        log.info(e.getMessage());
+        log.info("-------------------------------------------");
         return ResponseResult.build(ErrorInfo.NO_AUTHORITY);
-    }
-
+    }*/
 
     @ExceptionHandler()
     @ResponseBody
-    public Object handler(Exception e) {
+    public ResponseResult handler(Exception e) {
         log.error("系统异常！", e);
         return ResponseResult.build(ErrorInfo.ERROR);
     }

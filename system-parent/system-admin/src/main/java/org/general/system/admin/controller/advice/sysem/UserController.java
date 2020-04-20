@@ -7,8 +7,6 @@ import org.general.system.common.controller.BaseController;
 import org.general.system.common.data.entity.BaseEntity;
 import org.general.system.common.data.entity.system.SystemUser;
 import org.general.system.common.data.page.TableDataInfo;
-import org.general.system.common.service.RedisService;
-import org.general.system.common.service.system.SystemRoleService;
 import org.general.system.common.service.system.SystemUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -23,12 +21,6 @@ public class UserController extends BaseController {
     @Autowired
     private SystemUserService systemUserService;
 
-    @Autowired
-    private SystemRoleService systemRoleService;
-
-    @Autowired
-    private RedisService shiroRealm;
-
     /**
      * 系统用户查询
      * @param searchStr
@@ -39,9 +31,7 @@ public class UserController extends BaseController {
     @GetMapping(value = "/list")
     public TableDataInfo list(@RequestParam(value = "searchStr", defaultValue = "-1") String searchStr,
                               @RequestParam(value = "status", defaultValue = "-1") int status) {
-        startPage();
         SystemUser systemUser = new SystemUser();
-        shiroRealm.delete("");
         return getDataTable(systemUserService.selectSystemUserList(systemUser));
     }
 

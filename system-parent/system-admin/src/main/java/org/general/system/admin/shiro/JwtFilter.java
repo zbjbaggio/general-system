@@ -1,19 +1,19 @@
 package org.general.system.admin.shiro;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.general.system.admin.constants.Constants;
-import org.general.system.admin.utils.ValueHolder;
-import org.general.system.common.utils.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.general.system.common.data.ResponseResult;
+import org.general.system.common.enmus.ErrorInfo;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * @Description: 鉴权登录拦截器
@@ -38,6 +38,23 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         JwtToken jwtToken = new JwtToken(token);
         getSubject(request, response).login(jwtToken);
         return true;
+	}
+
+	@Override
+	public void doFilterInternal(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException{
+		try {
+			super.doFilterInternal(request,response, chain);
+		} catch (ServletException e) {
+			if (e.getCause() instanceof AuthenticationException) {
+				log.info("", e);
+				response.setContentType("application/json; charset=utf-8");
+				response.setCharacterEncoding("UTF-8");
+				OutputStream out = response.getOutputStream();
+				out.write(ResponseResult.build(ErrorInfo.LOGIN_AGAIN).toString().getBytes("UTF-8"));
+				out.flush();
+			}
+			throw e;
+		}
 	}
 
 	/**
@@ -65,6 +82,9 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 			httpServletResponse.setStatus(HttpStatus.OK.value());
 			return false;
 		}
-		return super.preHandle(request, response);
+			return super.preHandle(request, response);
+
 	}
+
+
 }

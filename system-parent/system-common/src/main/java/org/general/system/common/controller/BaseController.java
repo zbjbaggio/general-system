@@ -2,6 +2,7 @@ package org.general.system.common.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.general.system.common.data.page.PageDomain;
 import org.general.system.common.data.page.TableDataInfo;
 import org.general.system.common.data.page.TableSupport;
@@ -9,6 +10,7 @@ import org.general.system.common.utils.SqlUtil;
 
 import java.util.List;
 
+@Slf4j
 public class BaseController {
 
     protected void startPage() {
@@ -27,4 +29,5 @@ public class BaseController {
         rspData.setTotal(new PageInfo(list).getTotal());
         return rspData;
     }
+
 }

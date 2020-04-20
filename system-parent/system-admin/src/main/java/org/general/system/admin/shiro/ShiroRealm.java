@@ -5,11 +5,13 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.pam.UnsupportedTokenException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.general.system.common.data.vo.system.SystemUserVO;
+import org.general.system.common.exception.PrivateException;
 import org.general.system.common.service.RedisService;
 import org.general.system.common.service.system.SystemUserService;
 import org.general.system.common.utils.JwtUtil;
@@ -84,13 +86,16 @@ public class ShiroRealm extends AuthorizingRealm {
 	private SystemUserVO checkUserTokenIsEffect(String token) throws AuthenticationException {
 		// 解密获得username，用于和数据库进行对比
 		String username = JwtUtil.getUsername(token);
+		if (StringUtil.isEmpty(username)) {
+			//throw new AuthenticationException("token不正确，重新登录!");
+		}
 		//redisService.test(token);
 		SystemUserVO systemLogin = redisService.getSystemLogin(username);
 		if (systemLogin == null) {
 			throw new AuthenticationException("token超时，重新登录!");
 		}
 		if (!token.equals(systemLogin.getToken())) {
-			throw new AuthenticationException("token不正确，重新登录!");
+			throw new AuthenticationException("token超时，重新登录!");
 		}
 		redisService.saveSystemLogin(systemLogin);
 		return systemLogin;

@@ -70,5 +70,11 @@ public class LoginController {
         return systemUserService.login(systemUserDTO);
     }
 
+    @GetMapping(value = "/notLogin")
+    public Object notLogin(@RequestBody @Validated(SystemUserDTO.LoginGroup.class) SystemUserDTO systemUserDTO, HttpServletRequest request, BindingResult bindingResult) {
+        return "aaaaa";
+    }
+
+
 
 }

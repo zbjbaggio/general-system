@@ -11,10 +11,40 @@ import java.util.List;
  * 描述：
  * Created by jay on 2017-12-13.
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @ToString(callSuper = true, exclude = {"createTime"})
-public class PermissionVO extends SystemPermission {
+public class PermissionVO {
+
+    private Long parentId;
+
+    private int type;
+
+    private String permission;
+
+
+
+    private String code;
+
+    private String path;
+
+    private String component;
+
+    private String redirect;
+
+    private String alwaysShow;
+
+    private String name;
+
+    private Meta meta;
+
+    @Data
+    public static class Meta {
+
+        private String title;
+
+        private String icon;
+
+    }
 
     List<PermissionVO> children;
 

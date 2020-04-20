@@ -17,8 +17,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="permission"    column="permission"    />
     </resultMap>
 
-    <resultMap type="org.general.system.common.data.vo.system.PermissionVO" id="PermissionVOResult" extends="SystemPermissionResult">
-
+    <resultMap type="org.general.system.common.data.vo.system.PermissionVO" id="PermissionVOResult">
+        <result property="path"    column="router"    />
+        <result property="type"    column="type"    />
+        <result property="permission"    column="permission"    />
+        <result property="parentId"    column="parent_id"    />
+        <collection property="meta" ofType="org.general.system.common.data.vo.system.PermissionVO$Meta">
+            <result property="title" column="name" />
+            <result property="icon" column="icon" />
+        </collection>
     </resultMap>
 
 	<sql id="selectSystemPermissionVo">

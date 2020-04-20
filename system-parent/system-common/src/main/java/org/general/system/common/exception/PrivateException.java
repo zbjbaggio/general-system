@@ -17,16 +17,18 @@ public class PrivateException extends RuntimeException {
     private String msg;
 
     public PrivateException(ErrorInfo errorInfo) {
+        super(errorInfo.getName());
         this.code = errorInfo.getValue();
         this.msg = errorInfo.getName();
     }
 
     public PrivateException(int code, String message) {
+        super(message);
         this.code = code;
         this.msg = message;
     }
 
     public PrivateException() {
-
+        super();
     }
 }
