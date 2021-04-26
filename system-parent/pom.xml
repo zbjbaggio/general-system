@@ -21,7 +21,7 @@
 
     <properties>
         <velocity.version>1.7</velocity.version>
-        <commons.io.version>2.5</commons.io.version>
+        <commons.io.version>2.7</commons.io.version>
         <system.version>1.0.0</system.version>
         <mybatis.version>2.1.1</mybatis.version>
         <pagehelper.version>1.2.13</pagehelper.version>
