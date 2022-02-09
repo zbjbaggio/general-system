@@ -25,7 +25,7 @@
         <system.version>1.0.0</system.version>
         <mybatis.version>2.1.1</mybatis.version>
         <pagehelper.version>1.2.13</pagehelper.version>
-        <shiro.version>1.4.2</shiro.version>
+        <shiro.version>1.7.1</shiro.version>
         <shiro.redis.version>3.2.3</shiro.redis.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <jwt.version>3.8.3</jwt.version>
